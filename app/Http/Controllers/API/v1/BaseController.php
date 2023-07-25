@@ -10,40 +10,27 @@ class BaseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function sendResponse($result, $message)
     {
-        //
+    	$response = [
+            'success' => true,
+            'data'    => $result,
+            'message' => $message,
+        ];
+        return response()->json($response, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function sendError($error, $errorMessages = [], $code = 404)
     {
-        //
-    }
+    	$response = [
+            'success' => false,
+            'message' => $error,
+        ];
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if(!empty($errorMessages)){
+            $response['data'] = $errorMessages;
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json($response, $code);
     }
 }
