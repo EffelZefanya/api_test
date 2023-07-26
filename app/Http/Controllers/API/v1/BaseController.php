@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BaseController extends Controller
 {
@@ -17,6 +18,18 @@ class BaseController extends Controller
             'data'    => $result,
             'message' => $message,
         ];
+
+        if ($result instanceof LengthAwarePaginator){
+            $response['pagination'] = [
+                'total' => $result->total(),
+                'per_page' => $result->perPage(),
+                'current_page' => $result->currentPage(),
+                'last_page' => $result->lastPage(),
+                'from' => $result->firstItem(),
+                'to' => $result->lastItem()
+            ];
+        }
+
         return response()->json($response, 200);
     }
 

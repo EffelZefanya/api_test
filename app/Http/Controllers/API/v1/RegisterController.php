@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\V1\BaseController;
@@ -46,14 +46,15 @@ class RegisterController extends BaseController
     public function login(Request $request): JsonResponse
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')-> accessToken;
+            $authenticated_user = Auth::user();
+            $user = User::find($authenticated_user->id);
+            $success['token'] =  $user->createToken('MyApp')-> accessToken->token;
             $success['name'] =  $user->name;
 
             return $this->sendResponse($success, 'User login successfully.');
         }
         else{
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            return $this->sendError('Unauthorized.', ['error'=>'Unauthorized']);
         }
     }
 }
