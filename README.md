@@ -9,7 +9,7 @@ This is a project created to solve the 5th task of Investree's Fullstack Develop
 - [My Process](#my-process)
     - [Built With](#built-with)
     - [What I Learned](#what-i-learned)
-    - [Challenge I Encountered](#challenge-i-encountered)
+    - [Challenge I Encountered](#challenges-i-encountered)
 
 ## Overveiw
 Goal: Building a REST API and OAuth token using the Laravel framework, as well as Laravel Passport.
